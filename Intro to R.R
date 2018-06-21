@@ -42,11 +42,18 @@ z6
 #
 # How to programmatically remove all variables
 #
-# rm(list=ls(all=TRUE))
+rm(list=ls(all=TRUE))
+#
+# How to programmatically clear the Console
+cat("\014")
 #
 # Vectors in R
 #
 name <- c("Mike", "Lucy", "John") 
+name[1]
+name[2:3]
+name[c(1,3)]
+#
 age <- c(20, 25, 30) 
 #
 X <- c(1, 3, 5, 7, 9, 11)
@@ -56,6 +63,8 @@ Y <- c(2,4,6,8,10,12)
 X-Y
 Z <- c(0,2,4)
 X-Z
+Z2 <- c(0,1,2,3)
+X-Z2
 #
 # Missing Data in R
 #
@@ -65,17 +74,27 @@ Z <- c(2, NULL, 6, 8, NA, 12)
 #
 # Useful Functions....
 #
-nchar(Name)
+nchar(name)
 length(X)
 mean(X)
 ?`*`
+?"*"
 apropos('mea')
+# Clean Up 
+#
+rm(list=ls(all=TRUE))
+cat("\014") 
+#
 #
 # Arrays and Matrices
 #
 theArray2d <- array(1:9, dim=c(3,3))
 theArray2d[1,2]
 #
+View(theArray2d)
+#
+theArray2d <- array(1:9, dim=c(3,3), byrow=TRUE)
+# The above is to show that byrow is not valid for arrays
 View(theArray2d)
 #
 theArray3d <- array(1:27, dim=c(3,3,3))
@@ -86,11 +105,19 @@ View(theArray3d)
 theMatrix <- matrix(1:4, nrow=2)
 View(theMatrix)
 #
+theMatrix <- matrix(1:4, nrow=2, byrow=TRUE)
+View(theMatrix)
 # Lists
 y <- list("a", 1L, 1.5, TRUE)
+y[3]
 str(y)
 ?str()
 #
+# Clean Up 
+#
+rm(list=ls(all=TRUE))
+cat("\014") 
+##
 # Data Frames
 #
 x <- 10:1
@@ -99,22 +126,37 @@ z <- c('Hockey', 'Football', 'Curling', 'Soccer', 'Rugby', 'Baseball', 'Golf', '
 theDF <- data.frame(x,y,z)
 theDF
 theDF[1,2]
+View(theDF)
 #
+names(theDF)<-c("Popularity", "Team Strength", "Sport")
+View(theDF)
 #
-Yellow_Tripdata_2017_06 <- read.csv('yellow_tripdata_2017-06.csv')
+theDF[2:3]
+theDF[1,3]
+theDF[c(1,3)]
+theDF[3]
+theDF$Sport
+theDF$`Team Strength`
+#
+# Clean Up 
+#
+rm(list=ls(all=TRUE))
+cat("\014") 
+#
+# Yellow_Tripdata_2017_06 <- read.csv('yellow_tripdata_2017-06.csv')
 View(Yellow_Tripdata_2017_06)
 head(Yellow_Tripdata_2017_06)
 str(Yellow_Tripdata_2017_06)
 summary(Yellow_Tripdata_2017_06)
 #
-Filtered_Yellow_Tripdata_2017_06 <- filter(Yellow_Tripdata_2017_06,Yellow_Tripdata_2017_06[5]<1000)
-View(Filtered_Yellow_Tripdata_2017_06)
-str(Filtered_Yellow_Tripdata_2017_06)
-summary(Filtered_Yellow_Tripdata_2017_06)
+#Filtered_Yellow_Tripdata_2017_06 <- filter(Yellow_Tripdata_2017_06,Yellow_Tripdata_2017_06[5]<1000)
+#View(Filtered_Yellow_Tripdata_2017_06)
+#str(Filtered_Yellow_Tripdata_2017_06)
+#summary(Filtered_Yellow_Tripdata_2017_06)
 #
-Filtered_Yellow_Tripdata_2017_06<-Yellow_Tripdata_2017_06[5]<1000
-str(Filtered_Yellow_Tripdata_2017_06)
-summary(Filtered_Yellow_Tripdata_2017_06)
+#Filtered_Yellow_Tripdata_2017_06<-Yellow_Tripdata_2017_06[5]<1000
+#str(Filtered_Yellow_Tripdata_2017_06)
+#summary(Filtered_Yellow_Tripdata_2017_06)
 #
 d <- Yellow_Tripdata_2017_06
 d2<-d[which(d$trip_distance<1000),]
