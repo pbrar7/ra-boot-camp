@@ -6,7 +6,6 @@ install.packages("validate")
 
 # Load "validate" package into active memory
 library(validate)
-?validate()
 
 # Let's examine Yellow_Tripdata_2017_06 to remind us what's in it...
 View(Yellow_Tripdata_2017_06)
