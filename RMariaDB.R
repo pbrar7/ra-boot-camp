@@ -1,24 +1,53 @@
+# Install and load RMariaDB package
 install.packages(RMariaDB)
 library(RMariaDB)
 
+#Use dbConnect to construct connection information
 con <- dbConnect(RMariaDB::MariaDB(), dbname='test', user = "root", password = "root2018")
-dbListTables(con)
 
+# Look at con
+con
+
+# Look at what objects exist at connection
 dbListObjects(con)
 
-dbExistsTable(con, "yellow_tripdata_2017_06")
+# Wcich of those objects are tables?
+dbListTables(con)
 
-dbGetQuery(con, 'SELECT * FROM yellow_tripdata_2017_06 LIMIT 5')
+# Another way to check if the tables you're looking for exists
+dbExistsTable(con, "YT_2017_06_Validated")
+
+# Send query to MariaDB, retrieve results, and clear the result set, all in one step
+dbGetQuery(con, 'SELECT * FROM YT_2017_06_Validated LIMIT 5')
 
 # Send query to pull requests in batches
-res <- dbSendQuery(con, 'SELECT tpep_pickup_datetime, tpep_dropoff_datetime FROM yellow_tripdata_2017_06')
+res <- dbSendQuery(con, 'SELECT id, tpep_pickup_datetime, tpep_dropoff_datetime FROM YT_2017_06_Validated')
+
+# Retrieve results with dbFeth()
 data <- dbFetch(res)
-View(data)
+
+# Take a quick look to see what you retrieved
+head(data,1)
+
+# Clear the result on the MariaDB server
 dbClearResult(res)
 
+# Let's turn pickup an dropoff times into trip length
 data$mins <- with(data, difftime(tpep_dropoff_datetime,tpep_pickup_datetime,units="mins") )
-View(data)
+head(data,1)
 
-load("YT_2017_06_Validated.RData")
+# Drop everything from the working data frame except id and length
+YT_2017_06_Length <- within(data, rm(tpep_dropoff_datetime,tpep_pickup_datetime))
+head(YT_2017_06_Length)
 
-dbWriteTable(con,"YT_2017_06_Validated",YT_2017_06_Validated)
+# Push the table to the MariaDB server (will take a while)
+dbWriteTable(con,"YT_2017_06_Length",YT_2017_06_Length)
+
+# Sample query to combine data from two tables on server....
+
+data2 <- dbGetQuery(con, 'SELECT YT_2017_06_validated.id, tip_amount,mins FROM YT_2017_06_validated JOIN YT_2017_06_length
+                    on YT_2017_06_validated.id = YT_2017_06_length.id')
+View(data2)
+
+
+
