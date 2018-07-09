@@ -153,7 +153,9 @@ theDF$`Team Strength`
 rm(list=ls(all=TRUE))
 cat("\014") 
 #
+ptm <- proc.time()
 Yellow_Tripdata_2017_06 <- read.csv('yellow_tripdata_2017-06.csv')
+proc.time() - ptm
 View(Yellow_Tripdata_2017_06)
 
 head(Yellow_Tripdata_2017_06)
@@ -161,9 +163,8 @@ str(Yellow_Tripdata_2017_06)
 summary(Yellow_Tripdata_2017_06)
 
 #
-# d <- Yellow_Tripdata_2017_06
+# Throwing out absurdly long trips
 d2<-Yellow_Tripdata_2017_06[which(Yellow_Tripdata_2017_06$trip_distance<1000),]
-
 str(d2)
 summary(d2)
 
