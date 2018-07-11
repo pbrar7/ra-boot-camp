@@ -1,5 +1,5 @@
 # Install and load RMariaDB package
-install.packages(RMariaDB)
+install.packages("RMariaDB")
 library(RMariaDB)
 
 #Use dbConnect to construct connection information
@@ -23,7 +23,7 @@ dbGetQuery(con, 'SELECT * FROM YT_2017_06_Validated LIMIT 5')
 # Send query to pull requests in batches
 res <- dbSendQuery(con, 'SELECT id, tpep_pickup_datetime, tpep_dropoff_datetime FROM YT_2017_06_Validated')
 
-# Retrieve results with dbFeth()
+# Retrieve results with dbFetch()
 data <- dbFetch(res)
 
 # Take a quick look to see what you retrieved
