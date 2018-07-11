@@ -1,5 +1,5 @@
 # Install and load RMariaDB package
-install.packages(RMariaDB)
+install.packages("RMariaDB")
 library(RMariaDB)
 
 #Use dbConnect to construct connection information
