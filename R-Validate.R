@@ -89,3 +89,6 @@ str(YT_2017_06_Validated)
 
 # Finally, save our validated data set for the next module...
 save(YT_2017_06_Validated,file="YT_2017_06_Validated.RData")
+
+YT_2017_06_Validated<-YT_2017_06_Validated[which(YT_2017_06_Validated$TD.GT.0 == T & YT_2017_06_Validated$AM.GT.0 == T & YT_2017_06_Validated$TD.LT.1000 == T),]
+
