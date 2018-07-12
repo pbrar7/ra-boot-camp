@@ -70,6 +70,6 @@ head(yt_duration,1)
 # Drop everything except id and length
 yt_duration <- within(yt_duration, rm(tpep_dropoff_datetime,tpep_pickup_datetime))
 
-dbWriteTable(con,"yt_duration",yt_vduration)
+dbWriteTable(con,"yt_duration",yt_duration)
 
 
