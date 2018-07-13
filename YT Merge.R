@@ -57,7 +57,7 @@ library(RMariaDB)
 #Use dbConnect to construct connection information
 con <- dbConnect(RMariaDB::MariaDB(), dbname='test', user = "root", password = "root2018")
 
-dbWriteTable(con,"yt_validated_master",yt_validated_master)
+dbWriteTable(con,"yt_validated_master",yt_validated_master, overwrite = TRUE)
 
 yt_duration = subset(yt_validated_master, select = c(id, tpep_dropoff_datetime,tpep_pickup_datetime) )
 
@@ -70,6 +70,6 @@ head(yt_duration,1)
 # Drop everything except id and length
 yt_duration <- within(yt_duration, rm(tpep_dropoff_datetime,tpep_pickup_datetime))
 
-dbWriteTable(con,"yt_duration",yt_vduration)
+dbWriteTable(con,"yt_duration",yt_duration, overwrite = TRUE)
 
 
